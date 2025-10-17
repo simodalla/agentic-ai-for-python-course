@@ -1,11 +1,11 @@
 """Data models for Gitty Up."""
 
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 from pathlib import Path
 
 
-class UpdateStrategy(Enum):
+class UpdateStrategy(StrEnum):
     """Git update strategies."""
 
     PULL = "pull"
@@ -13,7 +13,7 @@ class UpdateStrategy(Enum):
     REBASE = "rebase"
 
 
-class RepoState(Enum):
+class RepoState(StrEnum):
     """State of a repository after processing."""
 
     SUCCESS = "success"
