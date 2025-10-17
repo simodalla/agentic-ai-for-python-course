@@ -77,6 +77,7 @@ class SummaryStats:
 
     repos_found: int = 0
     repos_updated: int = 0
+    repos_already_up_to_date: int = 0
     repos_skipped: int = 0
     repos_failed: int = 0
     duration_seconds: float = 0.0
@@ -87,7 +88,14 @@ class SummaryStats:
         self.results.append(result)
         match result.state:
             case RepoState.SUCCESS:
-                self.repos_updated += 1
+                # Check if repo was already up to date or actually pulled changes
+                if (
+                    result.commits_pulled == 0
+                    and "Already up to date" in result.message
+                ):
+                    self.repos_already_up_to_date += 1
+                else:
+                    self.repos_updated += 1
             case RepoState.SKIPPED:
                 self.repos_skipped += 1
             case RepoState.FAILED:
@@ -99,6 +107,7 @@ class SummaryStats:
             "summary": {
                 "repos_found": self.repos_found,
                 "repos_updated": self.repos_updated,
+                "repos_already_up_to_date": self.repos_already_up_to_date,
                 "repos_skipped": self.repos_skipped,
                 "repos_failed": self.repos_failed,
                 "duration_seconds": round(self.duration_seconds, 2),

@@ -138,6 +138,14 @@ def report_summary(stats: SummaryStats, no_color: bool = False) -> None:
         )
         print(format_with_color(success_msg, constants.COLOR_SUCCESS, no_color))
 
+    # Already up to date
+    if stats.repos_already_up_to_date > 0:
+        up_to_date_msg = (
+            f"  {constants.SYMBOL_SUCCESS} Already up to date: "
+            f"{stats.repos_already_up_to_date}"
+        )
+        print(format_with_color(up_to_date_msg, constants.COLOR_SUCCESS, no_color))
+
     # Skipped
     if stats.repos_skipped > 0:
         skipped_msg = f"  {constants.SYMBOL_WARNING} Skipped: {stats.repos_skipped}"

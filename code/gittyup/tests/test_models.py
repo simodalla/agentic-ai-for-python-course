@@ -52,6 +52,7 @@ def test_summary_stats_to_dict() -> None:
     stats = SummaryStats(
         repos_found=5,
         repos_updated=3,
+        repos_already_up_to_date=0,
         repos_skipped=1,
         repos_failed=1,
         duration_seconds=12.345,
@@ -77,12 +78,67 @@ def test_summary_stats_to_dict() -> None:
 
     assert result["summary"]["repos_found"] == 5
     assert result["summary"]["repos_updated"] == 3
+    assert result["summary"]["repos_already_up_to_date"] == 0
     assert result["summary"]["repos_skipped"] == 1
     assert result["summary"]["repos_failed"] == 1
     assert result["summary"]["duration_seconds"] == 12.35
     assert len(result["repositories"]) == 2
     assert result["repositories"][0]["path"] == "/tmp/repo1"
     assert result["repositories"][1]["path"] == "/tmp/repo2"
+
+
+def test_summary_stats_add_result_already_up_to_date() -> None:
+    """Test that add_result correctly categorizes already-up-to-date repos."""
+    stats = SummaryStats()
+
+    # Already up to date repo
+    up_to_date_result = RepoStatus(
+        path=Path("/tmp/repo1"),
+        state=RepoState.SUCCESS,
+        branch="main",
+        message="Already up to date",
+        commits_pulled=0,
+    )
+    stats.add_result(up_to_date_result)
+
+    assert stats.repos_already_up_to_date == 1
+    assert stats.repos_updated == 0
+
+    # Updated repo
+    updated_result = RepoStatus(
+        path=Path("/tmp/repo2"),
+        state=RepoState.SUCCESS,
+        branch="main",
+        message="Fast-forward",
+        commits_pulled=1,
+    )
+    stats.add_result(updated_result)
+
+    assert stats.repos_already_up_to_date == 1
+    assert stats.repos_updated == 1
+
+    # Skipped repo
+    skipped_result = RepoStatus(
+        path=Path("/tmp/repo3"),
+        state=RepoState.SKIPPED,
+        branch="develop",
+        message="Uncommitted changes",
+    )
+    stats.add_result(skipped_result)
+
+    assert stats.repos_skipped == 1
+
+    # Failed repo
+    failed_result = RepoStatus(
+        path=Path("/tmp/repo4"),
+        state=RepoState.FAILED,
+        branch="main",
+        message="Pull failed",
+        error="Connection timeout",
+    )
+    stats.add_result(failed_result)
+
+    assert stats.repos_failed == 1
 
 
 def test_output_format_enum() -> None:

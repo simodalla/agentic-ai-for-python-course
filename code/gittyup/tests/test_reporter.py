@@ -137,6 +137,7 @@ def test_report_summary(capsys: pytest.CaptureFixture) -> None:
     stats = SummaryStats(
         repos_found=10,
         repos_updated=7,
+        repos_already_up_to_date=0,
         repos_skipped=2,
         repos_failed=1,
         duration_seconds=5.5,
@@ -160,6 +161,7 @@ def test_report_summary_no_failures(capsys: pytest.CaptureFixture) -> None:
     stats = SummaryStats(
         repos_found=5,
         repos_updated=5,
+        repos_already_up_to_date=0,
         repos_skipped=0,
         repos_failed=0,
         duration_seconds=3.2,
@@ -173,3 +175,24 @@ def test_report_summary_no_failures(capsys: pytest.CaptureFixture) -> None:
     assert "5" in output
     assert "Successfully updated: 5" in output
     # Skipped and Failed sections might not appear or be 0
+
+
+def test_report_summary_with_already_up_to_date(capsys: pytest.CaptureFixture) -> None:
+    """Test summary with repos that are already up to date."""
+    stats = SummaryStats(
+        repos_found=5,
+        repos_updated=2,
+        repos_already_up_to_date=3,
+        repos_skipped=0,
+        repos_failed=0,
+        duration_seconds=2.5,
+    )
+
+    report_summary(stats, no_color=True)
+
+    captured = capsys.readouterr()
+    output = captured.out
+
+    assert "5" in output  # repos found
+    assert "Successfully updated: 2" in output
+    assert "Already up to date: 3" in output
