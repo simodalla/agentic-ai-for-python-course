@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode Details</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+        .audio-player {
+            width: 100%;
+            margin: 2rem 0;
+        }
+        .show-notes-full {
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+        .back-button {
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title" id="episode-title">
+                    Loading...
+                </h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="back-button">
+                <a href="index.html" class="button is-light">
+                    <span>← Back to Episodes</span>
+                </a>
+            </div>
+
+            <div id="episode-details"></div>
+            <div id="loading" class="has-text-centered">
+                <progress class="progress is-primary" max="100">Loading...</progress>
+            </div>
+            <div id="error" class="notification is-danger is-hidden"></div>
+        </div>
+    </section>
+
+    <script>
+        async function loadEpisodeDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const episodeIndex = urlParams.get('episode');
+
+            const titleElement = document.getElementById('episode-title');
+            const detailsContainer = document.getElementById('episode-details');
+            const loading = document.getElementById('loading');
+            const errorDiv = document.getElementById('error');
+
+            if (episodeIndex === null) {
+                showError('No episode specified');
+                return;
+            }
+
+            try {
+                const response = await fetch('tracks.json');
+                if (!response.ok) {
+                    throw new Error(`Failed to load episode data: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const episodes = data.episodes;
+
+                if (!episodes || episodes.length === 0) {
+                    throw new Error('No episodes found');
+                }
+
+                const index = parseInt(episodeIndex, 10);
+                if (isNaN(index) || index < 0 || index >= episodes.length) {
+                    throw new Error('Invalid episode index');
+                }
+
+                const episode = episodes[index];
+                loading.classList.add('is-hidden');
+
+                // Update page title
+                titleElement.textContent = episode.title;
+                document.title = `${episode.title} - Episode Details`;
+
+                // Create episode details
+                detailsContainer.innerHTML = `
+                    <div class="box">
+                        <h2 class="title is-3">${escapeHtml(episode.title)}</h2>
+                        
+                        <div class="content">
+                            <h3 class="subtitle is-5">Show Notes</h3>
+                            <p class="show-notes-full">${escapeHtml(episode.show_nows)}</p>
+                        </div>
+
+                        <div class="audio-player">
+                            <h3 class="subtitle is-5">Audio Player</h3>
+                            <audio controls class="audio-player">
+                                <source src="${escapeHtml(episode.mp3_link)}" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+
+                        <div class="buttons">
+                            <a href="${escapeHtml(episode.mp3_link)}" 
+                               class="button is-primary" 
+                               download
+                               target="_blank">
+                                Download Episode
+                            </a>
+                        </div>
+                    </div>
+                `;
+
+            } catch (error) {
+                showError(error.message);
+                console.error('Error loading episode:', error);
+            }
+
+            function showError(message) {
+                loading.classList.add('is-hidden');
+                errorDiv.textContent = `Error: ${message}`;
+                errorDiv.classList.remove('is-hidden');
+                titleElement.textContent = 'Error Loading Episode';
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Load episode details when page loads
+        document.addEventListener('DOMContentLoaded', loadEpisodeDetails);
+    </script>
+</body>
+</html>
+

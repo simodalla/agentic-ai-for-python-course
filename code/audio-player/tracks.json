@@ -1,0 +1,29 @@
+{
+    "episodes": [
+        {
+            "title": "Pyrefly: Fast, IDE-friendly typing for Python",
+            "mp3_link": "https://talkpython.fm/episodes/download/523/pyrefly-fast-ide-friendly-typing-for-python.mp3",
+            "show_nows": "Python typing got fast enough to feel invisible. Pyrefly is a new, open source type checker and IDE language server from Meta, written in Rust, with a focus on instant feedback and real-world DX. Today, we will dig into what it is, why it exists, and how it plays with the rest of the typing ecosystem. We have Abby Mitchell, Danny Yang, and Kyle Into from Pyrefly here to dive into the project."
+        },
+        {
+            "title": "pyx - the other side of the uv coin (announcing pyx)",
+            "mp3_link": "https://talkpython.fm/episodes/download/520/pyx-the-other-side-of-the-uv-coin-announcing-pyx.mp3",
+            "show_nows": "A couple years ago, Charlie Marsh lit a fire under Python tooling with Ruff and then uv. Today he’s back with something on the other side of that coin: pyx.\n\nPyx isn’t a PyPI replacement. Think server, not just index. It mirrors PyPI, plays fine with pip or uv, and aims to make installs fast and predictable by letting a smart client talk to a smart server. When the client and server understand each other, you get new fast paths, fewer edge cases, and the kind of reliability teams beg for. If Python packaging has felt like friction, this conversation is traction. Let’s get into it."
+        },
+        {
+            "title": "Data Science Cloud Lessons at Scale",
+            "mp3_link": "https://talkpython.fm/episodes/download/519/data-science-cloud-lessons-at-scale.mp3",
+            "show_nows": "Today on Talk Python: What really happens when your data work outgrows your laptop. Matthew Rocklin, creator of Dask and cofounder of Coiled, and Nat Tabris a staff software engineer at Coiled join me to unpack the messy truth of cloud-scale Python. During the episode we actually spin up a 1,000 core cluster from a notebook, twice! We also discuss picking between pandas and Polars, when GPUs help, and how to avoid surprise bills. Real lessons, real tradeoffs, shared by people who have built this stuff. Stick around."
+        },
+        {
+            "title": "Agentic Al Programming with Python",
+            "mp3_link": "https://talkpython.fm/episodes/download/517/agentic-al-programming-with-python.mp3",
+            "show_nows": "Agentic AI programming is what happens when coding assistants stop acting like autocomplete and start collaborating on real work. In this episode, we cut through the hype and incentives to define “agentic,” then get hands-on with how tools like Cursor, Claude Code, and LangChain actually behave inside an established codebase. Our guest, Matt Makai, now VP of Developer Relations at DigitalOcean, creator of Full Stack Python and Plushcap, shares hard-won tactics. We unpack what breaks, from brittle “generate a bunch of tests” requests to agents amplifying technical debt and uneven design patterns. Plus, we also discuss a sane git workflow for AI-sized diffs. You’ll hear practical Claude tips, why developers write more bugs when typing less, and where open source agents are headed. Hint: The destination is humans as editors of systems, not just typists of code."
+        },
+        {
+            "title": "Stories from Python History",
+            "mp3_link": "https://talkpython.fm/episodes/download/513/stories-from-python-history.mp3",
+            "show_nows": "Why do people listen to this podcast? Sure, they're looking for technical explorations of new libraries and ideas. But often it's to hear the story behind them. If that speaks to you, then I have the perfect episode lined up. I have Barry Warsaw, Paul Everitt, Carol Willing, and Brett Cannon all back on the show to share stories from the history of Python. You'll hear about how import this came to be and how the first PyCon had around 30 attendees (two of whom are guests on this episode!). Sit back and enjoy the humorous stories from Python's past."
+        }
+    ]
+}
