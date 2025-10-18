@@ -5,64 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Podcast Episodes</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <style>
-        /* Dark grey hero/navigation */
-        .hero.is-dark-grey {
-            background-color: #2b2b2b;
-            color: white;
-        }
-        
-        .hero.is-dark-grey .title,
-        .hero.is-dark-grey .subtitle {
-            color: white;
-        }
-        
-        .episode-card {
-            margin-bottom: 1.5rem;
-            transition: transform 0.2s, box-shadow 0.2s;
-            border-left: 4px solid #ff6b6b;
-        }
-        
-        .episode-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
-            border-left-color: #ff5252;
-        }
-        
-        .show-notes {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
-        .card-footer-item {
-            color: #ff6b6b;
-            font-weight: bold;
-            transition: background-color 0.2s;
-        }
-        
-        .card-footer-item:hover {
-            background-color: #ff6b6b;
-            color: white !important;
-        }
-        
-        .progress.is-bold {
-            background-color: #e0e0e0;
-        }
-        
-        .progress.is-bold::-webkit-progress-value {
-            background-color: #ff6b6b;
-        }
-        
-        .progress.is-bold::-moz-progress-bar {
-            background-color: #ff6b6b;
-        }
-        
-        .notification.is-danger {
-            background-color: #ff5252;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <section class="hero is-dark-grey">
@@ -88,69 +31,7 @@
         </div>
     </section>
 
-    <script>
-        async function loadEpisodes() {
-            const container = document.getElementById('episodes-container');
-            const loading = document.getElementById('loading');
-            const errorDiv = document.getElementById('error');
-
-            try {
-                const response = await fetch('tracks.json');
-                if (!response.ok) {
-                    throw new Error(`Failed to load episodes: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                const episodes = data.episodes;
-
-                if (!episodes || episodes.length === 0) {
-                    throw new Error('No episodes found');
-                }
-
-                loading.classList.add('is-hidden');
-
-                episodes.forEach((episode, index) => {
-                    const card = document.createElement('div');
-                    card.className = 'card episode-card';
-                    
-                    card.innerHTML = `
-                        <div class="card-content">
-                            <div class="media">
-                                <div class="media-content">
-                                    <p class="title is-4">${escapeHtml(episode.title)}</p>
-                                </div>
-                            </div>
-                            <div class="content">
-                                <p class="show-notes">${escapeHtml(episode.show_nows)}</p>
-                            </div>
-                        </div>
-                        <footer class="card-footer">
-                            <a href="details.html?episode=${index}" class="card-footer-item">
-                                <strong>Listen Now</strong>
-                            </a>
-                        </footer>
-                    `;
-                    
-                    container.appendChild(card);
-                });
-
-            } catch (error) {
-                loading.classList.add('is-hidden');
-                errorDiv.textContent = `Error: ${error.message}`;
-                errorDiv.classList.remove('is-hidden');
-                console.error('Error loading episodes:', error);
-            }
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        // Load episodes when page loads
-        document.addEventListener('DOMContentLoaded', loadEpisodes);
-    </script>
+    <script src="index.js"></script>
 </body>
 </html>
 

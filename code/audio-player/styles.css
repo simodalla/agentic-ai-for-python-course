@@ -1,0 +1,235 @@
+/* Dark grey hero/navigation */
+.hero.is-dark-grey {
+    background-color: #2b2b2b;
+    color: white;
+}
+
+.hero.is-dark-grey .title,
+.hero.is-dark-grey .subtitle {
+    color: white;
+}
+
+.episode-card {
+    margin-bottom: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-left: 4px solid #ff6b6b;
+}
+
+.episode-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+    border-left-color: #ff5252;
+}
+
+.show-notes {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-footer-item {
+    color: #ff6b6b;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.card-footer-item:hover {
+    background-color: #ff6b6b;
+    color: white !important;
+}
+
+.progress.is-bold {
+    background-color: #e0e0e0;
+}
+
+.progress.is-bold::-webkit-progress-value {
+    background-color: #ff6b6b;
+}
+
+.progress.is-bold::-moz-progress-bar {
+    background-color: #ff6b6b;
+}
+
+.notification.is-danger {
+    background-color: #ff5252;
+}
+
+/* Details page specific styles */
+.show-notes-full {
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.back-button {
+    margin-bottom: 2rem;
+}
+
+.back-button .button {
+    background-color: #4a4a4a;
+    color: white;
+    border: none;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.back-button .button:hover {
+    background-color: #363636;
+}
+
+.episode-content {
+    padding: 0;
+}
+
+.button.is-bold {
+    background-color: #ff6b6b;
+    border-color: #ff6b6b;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.button.is-bold:hover {
+    background-color: #ff5252;
+    border-color: #ff5252;
+}
+
+/* Custom Audio Player Styles - Overcast inspired */
+.custom-audio-player {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.album-art {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto 2rem;
+    display: block;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.player-title {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.player-subtitle {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+/* Progress Bar */
+.progress-container {
+    margin: 2rem 0;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background-color: #ddd;
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #ff8533;
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+.time-display {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* Playback Controls */
+.playback-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.control-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.control-button:hover {
+    transform: scale(1.1);
+}
+
+.control-button:active {
+    transform: scale(0.95);
+}
+
+.skip-button {
+    width: 80px;
+    height: 80px;
+    border: 3px solid #ff8533;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: white;
+}
+
+.skip-button svg {
+    width: 28px;
+    height: 28px;
+    fill: #ff8533;
+    position: absolute;
+    top: 12px;
+}
+
+.skip-button .skip-number {
+    position: absolute;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #ff8533;
+    bottom: 16px;
+}
+
+.play-pause-button {
+    width: 80px;
+    height: 80px;
+    background-color: #ff8533;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(255, 133, 51, 0.3);
+}
+
+.play-pause-button svg {
+    width: 32px;
+    height: 32px;
+    fill: white;
+}
+
+/* Hidden native audio element */
+audio {
+    display: none;
+}
