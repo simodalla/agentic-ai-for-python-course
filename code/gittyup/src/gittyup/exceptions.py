@@ -26,3 +26,9 @@ class ScanError(GittyUpError):
 
     pass
 
+
+class ConfigError(GittyUpError):
+    """Raised when there's an error with configuration."""
+
+    pass
+

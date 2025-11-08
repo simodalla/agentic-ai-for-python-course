@@ -1,0 +1,9 @@
+# Minimal Gitty Up Configuration
+# Just the essentials
+
+exclude_patterns:
+  - temp
+  - archive
+
+skip_dirty: true
+

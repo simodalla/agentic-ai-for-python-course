@@ -1,0 +1,31 @@
+# Advanced Gitty Up Configuration
+# For power users
+
+# Deep scanning with custom exclusions
+max_depth: 15
+exclude_patterns:
+  - node_modules
+  - target         # Rust builds
+  - __pycache__
+  - .pytest_cache
+  - htmlcov
+  - .mypy_cache
+  - eggs
+  - .eggs
+  - *.egg-info
+  - temp
+  - tmp
+  - archive
+  - old-*          # Pattern matching
+
+# Aggressive update mode
+skip_dirty: false              # Update even with uncommitted changes (careful!)
+timeout_seconds: 60            # Longer timeout for slow networks
+
+# Detailed output
+verbose: true
+show_uptodate: true
+
+# Experimental features
+parallel_operations: false     # Not yet implemented in Phase 2
+

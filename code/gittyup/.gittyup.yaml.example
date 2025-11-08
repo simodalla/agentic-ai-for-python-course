@@ -1,0 +1,31 @@
+# Gitty Up Configuration Example
+# Copy this file to .gittyup.yaml in your project directory or
+# ~/.config/gittyup/config.yaml for global configuration
+
+# Scanning behavior
+max_depth: 10                    # Maximum directory depth to traverse
+exclude_patterns:                # Directories to skip (in addition to defaults)
+  # Defaults that are always excluded:
+  # - node_modules
+  # - venv, .venv
+  # - __pycache__
+  # - .tox
+  # - build, dist
+  
+  # Add your custom exclusions here:
+  # - temp
+  # - archive
+  # - old-projects
+
+# Git operations
+skip_dirty: true                 # Skip repositories with uncommitted changes
+timeout_seconds: 30              # Timeout for git operations
+
+# Output options
+verbose: false                   # Show detailed output
+quiet: false                     # Minimal output (errors and summary only)
+show_uptodate: true              # Show repositories that are already up-to-date
+
+# Advanced options (experimental)
+parallel_operations: false       # Update repositories in parallel
+
