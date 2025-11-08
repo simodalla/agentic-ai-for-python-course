@@ -4,7 +4,7 @@ Enhanced output formatting with Rich library.
 Provides progress bars, tables, and beautiful formatting.
 """
 
-from typing import List, Optional
+from typing import Optional
 from pathlib import Path
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, TaskProgressColumn
@@ -34,8 +34,7 @@ class RichOutputFormatter:
             return
 
         banner = Panel.fit(
-            "[bold cyan]🚀 Gitty Up 🚀[/bold cyan]\n"
-            "[cyan]Keeping Your Repos Up to Date[/cyan]",
+            "[bold cyan]🚀 Gitty Up 🚀[/bold cyan]\n[cyan]Keeping Your Repos Up to Date[/cyan]",
             border_style="cyan",
             padding=(0, 2),
         )
@@ -46,9 +45,7 @@ class RichOutputFormatter:
     def print_scanning(self, path: str) -> None:
         """Print scanning message."""
         if not self.quiet:
-            self.console.print(
-                f"[blue]🔍 Scanning for repositories in:[/blue] [bold]{path}[/bold]"
-            )
+            self.console.print(f"[blue]🔍 Scanning for repositories in:[/blue] [bold]{path}[/bold]")
 
     def print_found_repos(self, count: int) -> None:
         """Print number of repositories found."""
@@ -180,4 +177,3 @@ class RichOutputFormatter:
         """Print log file information."""
         if self.verbose and log_path:
             self.console.print(f"[dim]Logging to: {log_path}[/dim]")
-

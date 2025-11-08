@@ -2,7 +2,6 @@
 Tests for the CLI module.
 """
 
-import pytest
 from click.testing import CliRunner
 from unittest.mock import patch, MagicMock
 from gittyup.cli import main

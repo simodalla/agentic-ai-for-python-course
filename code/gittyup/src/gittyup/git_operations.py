@@ -8,7 +8,7 @@ particularly pulling changes from remote repositories.
 import subprocess
 from pathlib import Path
 from typing import Tuple
-from .exceptions import GitNotFoundError, RepositoryError
+from .exceptions import GitNotFoundError
 
 
 class GitOperations:
@@ -145,4 +145,3 @@ class GitOperations:
             return result.returncode == 0
         except (subprocess.SubprocessError, subprocess.TimeoutExpired):
             return False
-

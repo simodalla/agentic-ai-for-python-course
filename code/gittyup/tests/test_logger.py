@@ -2,7 +2,6 @@
 Tests for the logger module.
 """
 
-import pytest
 from pathlib import Path
 import tempfile
 from gittyup.logger import GittyUpLogger
@@ -140,9 +139,7 @@ class TestGittyUpLogger:
             log_dir = Path(tmpdir)
             logger = GittyUpLogger(log_dir=log_dir, enabled=True)
 
-            logger.log_operation_summary(
-                total=10, updated=7, skipped=2, errors=1, duration=5.5
-            )
+            logger.log_operation_summary(total=10, updated=7, skipped=2, errors=1, duration=5.5)
 
             log_file = log_dir / "gittyup.log"
             content = log_file.read_text()
@@ -243,4 +240,3 @@ class TestGittyUpLogger:
             content = log_file.read_text()
             assert "Error test" in content
             assert "ERROR" in content
-

@@ -3,8 +3,6 @@ Tests for the repository scanner module.
 """
 
 import pytest
-import tempfile
-from pathlib import Path
 from gittyup.scanner import RepositoryScanner
 from gittyup.exceptions import ScanError
 
@@ -21,9 +19,7 @@ class TestRepositoryScanner:
 
     def test_init_custom_excludes(self):
         """Test that custom exclude patterns are added."""
-        scanner = RepositoryScanner(
-            root_path=".", exclude_patterns=["custom1", "custom2"]
-        )
+        scanner = RepositoryScanner(root_path=".", exclude_patterns=["custom1", "custom2"])
         assert "custom1" in scanner.exclude_patterns
         assert "custom2" in scanner.exclude_patterns
         # Default excludes should still be present
@@ -39,7 +35,7 @@ class TestRepositoryScanner:
         """Test that scanning a file raises ScanError."""
         test_file = tmp_path / "test.txt"
         test_file.write_text("test")
-        
+
         scanner = RepositoryScanner(root_path=str(test_file))
         with pytest.raises(ScanError, match="not a directory"):
             scanner.scan()
@@ -55,10 +51,10 @@ class TestRepositoryScanner:
         # Create a fake .git directory
         git_dir = tmp_path / ".git"
         git_dir.mkdir()
-        
+
         scanner = RepositoryScanner(root_path=str(tmp_path))
         repos = scanner.scan()
-        
+
         assert len(repos) == 1
         assert repos[0] == tmp_path
 
@@ -68,14 +64,14 @@ class TestRepositoryScanner:
         project1 = tmp_path / "project1"
         project1.mkdir()
         (project1 / ".git").mkdir()
-        
+
         project2 = tmp_path / "project2"
         project2.mkdir()
         (project2 / ".git").mkdir()
-        
+
         scanner = RepositoryScanner(root_path=str(tmp_path))
         repos = scanner.scan()
-        
+
         assert len(repos) == 2
         assert project1 in repos
         assert project2 in repos
@@ -86,15 +82,15 @@ class TestRepositoryScanner:
         node_modules = tmp_path / "node_modules" / "package"
         node_modules.mkdir(parents=True)
         (node_modules / ".git").mkdir()
-        
+
         # Create a normal repo
         project = tmp_path / "project"
         project.mkdir()
         (project / ".git").mkdir()
-        
+
         scanner = RepositoryScanner(root_path=str(tmp_path))
         repos = scanner.scan()
-        
+
         # Should only find project, not node_modules
         assert len(repos) == 1
         assert project in repos
@@ -106,15 +102,15 @@ class TestRepositoryScanner:
         hidden_dir = tmp_path / ".hidden" / "repo"
         hidden_dir.mkdir(parents=True)
         (hidden_dir / ".git").mkdir()
-        
+
         # Create a normal repo
         project = tmp_path / "project"
         project.mkdir()
         (project / ".git").mkdir()
-        
+
         scanner = RepositoryScanner(root_path=str(tmp_path))
         repos = scanner.scan()
-        
+
         # Should only find project, not hidden directory
         assert len(repos) == 1
         assert project in repos
@@ -125,12 +121,12 @@ class TestRepositoryScanner:
         deep = tmp_path / "level1" / "level2" / "level3"
         deep.mkdir(parents=True)
         (deep / ".git").mkdir()
-        
+
         # Scanner with max_depth=2 should not find the repo
         scanner = RepositoryScanner(root_path=str(tmp_path), max_depth=2)
         repos = scanner.scan()
         assert len(repos) == 0
-        
+
         # Scanner with max_depth=3 should find it
         scanner = RepositoryScanner(root_path=str(tmp_path), max_depth=3)
         repos = scanner.scan()
@@ -141,10 +137,10 @@ class TestRepositoryScanner:
         # Create a git repo
         git_dir = tmp_path / ".git"
         git_dir.mkdir()
-        
+
         scanner = RepositoryScanner(root_path=str(tmp_path))
         assert scanner.is_git_repository(tmp_path) is True
-        
+
         # Test non-git directory
         non_git = tmp_path / "not-a-repo"
         non_git.mkdir()
@@ -156,10 +152,10 @@ class TestRepositoryScanner:
         git_dir = tmp_path / ".git" / "nested" / "deep"
         git_dir.mkdir(parents=True)
         (git_dir / ".git").mkdir()  # This should not be found
-        
+
         scanner = RepositoryScanner(root_path=str(tmp_path))
         repos = scanner.scan()
-        
+
         # Should only find the top-level repo
         assert len(repos) == 1
         assert repos[0] == tmp_path
@@ -169,19 +165,18 @@ class TestRepositoryScanner:
         # Create repos in non-alphabetical order
         (tmp_path / "zebra").mkdir()
         (tmp_path / "zebra" / ".git").mkdir()
-        
+
         (tmp_path / "alpha").mkdir()
         (tmp_path / "alpha" / ".git").mkdir()
-        
+
         (tmp_path / "beta").mkdir()
         (tmp_path / "beta" / ".git").mkdir()
-        
+
         scanner = RepositoryScanner(root_path=str(tmp_path))
         repos = scanner.scan()
-        
+
         # Check that results are sorted
         assert len(repos) == 3
         assert repos[0].name == "alpha"
         assert repos[1].name == "beta"
         assert repos[2].name == "zebra"
-

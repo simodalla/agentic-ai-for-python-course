@@ -5,7 +5,6 @@ Tests for the git operations module.
 import pytest
 from unittest.mock import patch, MagicMock
 import subprocess
-from pathlib import Path
 from gittyup.git_operations import GitOperations
 from gittyup.exceptions import GitNotFoundError
 
@@ -50,7 +49,7 @@ class TestGitOperations:
                 returncode=0, stdout="Updating...\nFast-forward", stderr=""
             )
             success, message = GitOperations.pull_repository(tmp_path)
-            
+
             assert success is True
             assert message == "Successfully updated"
             mock_run.assert_called_once()
@@ -58,11 +57,9 @@ class TestGitOperations:
     def test_pull_repository_already_up_to_date(self, tmp_path):
         """Test pulling repository that's already up to date."""
         with patch("subprocess.run") as mock_run:
-            mock_run.return_value = MagicMock(
-                returncode=0, stdout="Already up to date.", stderr=""
-            )
+            mock_run.return_value = MagicMock(returncode=0, stdout="Already up to date.", stderr="")
             success, message = GitOperations.pull_repository(tmp_path)
-            
+
             assert success is True
             assert message == "Already up to date"
 
@@ -73,7 +70,7 @@ class TestGitOperations:
                 returncode=1, stdout="", stderr="fatal: not a git repository"
             )
             success, message = GitOperations.pull_repository(tmp_path)
-            
+
             assert success is False
             assert "fatal" in message.lower()
 
@@ -81,7 +78,7 @@ class TestGitOperations:
         """Test pulling repository with timeout."""
         with patch("subprocess.run", side_effect=subprocess.TimeoutExpired("git", 30)):
             success, message = GitOperations.pull_repository(tmp_path)
-            
+
             assert success is False
             assert "timed out" in message.lower()
 
@@ -89,7 +86,7 @@ class TestGitOperations:
         """Test pulling repository with subprocess error."""
         with patch("subprocess.run", side_effect=subprocess.SubprocessError("error")):
             success, message = GitOperations.pull_repository(tmp_path)
-            
+
             assert success is False
             assert "error" in message.lower()
 
@@ -98,18 +95,16 @@ class TestGitOperations:
         with patch("subprocess.run") as mock_run:
             mock_run.return_value = MagicMock(returncode=0, stdout="", stderr="")
             is_clean, status = GitOperations.get_repository_status(tmp_path)
-            
+
             assert is_clean is True
             assert status == "Clean"
 
     def test_get_repository_status_dirty(self, tmp_path):
         """Test getting status of a dirty repository."""
         with patch("subprocess.run") as mock_run:
-            mock_run.return_value = MagicMock(
-                returncode=0, stdout=" M file.txt\n", stderr=""
-            )
+            mock_run.return_value = MagicMock(returncode=0, stdout=" M file.txt\n", stderr="")
             is_clean, status = GitOperations.get_repository_status(tmp_path)
-            
+
             assert is_clean is False
             assert status == "Uncommitted changes"
 
@@ -118,7 +113,7 @@ class TestGitOperations:
         with patch("subprocess.run") as mock_run:
             mock_run.return_value = MagicMock(returncode=1, stdout="", stderr="error")
             is_clean, status = GitOperations.get_repository_status(tmp_path)
-            
+
             assert is_clean is False
             assert "Unable to get status" in status
 
@@ -126,7 +121,7 @@ class TestGitOperations:
         """Test getting status with timeout."""
         with patch("subprocess.run", side_effect=subprocess.TimeoutExpired("git", 5)):
             is_clean, status = GitOperations.get_repository_status(tmp_path)
-            
+
             assert is_clean is False
             assert "Timeout" in status
 
@@ -152,8 +147,7 @@ class TestGitOperations:
         with patch("subprocess.run") as mock_run:
             mock_run.return_value = MagicMock(returncode=0, stdout="", stderr="")
             GitOperations.pull_repository(tmp_path, timeout=60)
-            
+
             # Check that timeout was passed to subprocess.run
             call_kwargs = mock_run.call_args[1]
             assert call_kwargs["timeout"] == 60
-

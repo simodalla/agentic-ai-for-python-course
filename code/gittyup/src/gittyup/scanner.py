@@ -5,7 +5,6 @@ This module provides functionality to traverse directory trees and identify
 all Git repositories within them.
 """
 
-import os
 from pathlib import Path
 from typing import List, Set
 from .exceptions import ScanError
@@ -31,7 +30,7 @@ class RepositoryScanner:
         self.root_path = Path(root_path).resolve()
         self.max_depth = max_depth
         self.exclude_patterns: Set[str] = set(exclude_patterns or [])
-        
+
         # Add common patterns to exclude by default
         default_excludes = {
             "node_modules",
@@ -133,4 +132,3 @@ class RepositoryScanner:
         """
         git_dir = path / ".git"
         return git_dir.exists() and git_dir.is_dir()
-

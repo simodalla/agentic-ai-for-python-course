@@ -8,4 +8,3 @@ helping developers keep their projects synchronized across multiple machines.
 __version__ = "0.2.0"
 __author__ = "Gitty Up Team"
 __license__ = "MIT"
-

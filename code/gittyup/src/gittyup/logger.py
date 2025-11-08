@@ -159,4 +159,3 @@ class GittyUpLogger:
                 return Path(handler.baseFilename)
 
         return None
-

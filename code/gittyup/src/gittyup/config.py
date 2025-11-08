@@ -10,7 +10,7 @@ Handles loading and merging configuration from multiple sources:
 
 import os
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 import yaml
 from .exceptions import GittyUpError
 
@@ -227,4 +227,3 @@ class Config:
         # Validate that verbose and quiet are not both True
         if self.config.get("verbose") and self.config.get("quiet"):
             raise ConfigError("Cannot use both verbose and quiet modes simultaneously")
-

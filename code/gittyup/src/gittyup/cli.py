@@ -14,7 +14,7 @@ from .output import OutputFormatter
 from .output_rich import RichOutputFormatter
 from .config import Config, ConfigError
 from .logger import GittyUpLogger
-from .exceptions import GittyUpError, GitNotFoundError, ScanError
+from .exceptions import GitNotFoundError, ScanError
 
 
 @click.command()
@@ -136,7 +136,7 @@ def main(
 
     # Initialize logger
     logger = GittyUpLogger(enabled=not no_log)
-    logger.info(f"Starting Gitty Up v0.2.0")
+    logger.info("Starting Gitty Up v0.2.0")
     logger.info(f"Scanning path: {path}")
 
     # Initialize output formatter

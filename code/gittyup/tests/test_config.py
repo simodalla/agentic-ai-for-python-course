@@ -3,7 +3,6 @@ Tests for the configuration module.
 """
 
 import pytest
-import tempfile
 from pathlib import Path
 import yaml
 from gittyup.config import Config, ConfigError
@@ -246,4 +245,3 @@ class TestConfig:
         assert isinstance(user_path, Path)
         assert "gittyup" in str(user_path)
         assert "config.yaml" in str(user_path)
-
