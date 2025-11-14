@@ -440,7 +440,8 @@ Use PyInstaller to create standalone binaries:
 
 ## 10. Implementation Phases
 
-Please indicate that a phase is done and which parts when you're finished.
+Please indicate that a phase is done and which parts when you're finished. Update this file
+accordingly.
 
 ### Phase 1: MVP (Minimum Viable Product)
 **Goal**: Basic functionality that solves the core problem.
